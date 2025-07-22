@@ -50,8 +50,7 @@ class tage : champsim::modules::branch_predictor
   bitset<32> path_history;
   int provider_table = -1;
   int alternate_table = -1;
-  bool use_alternate = false;
-  uint8_t use_alt_on_na = 8;
+  uint8_t use_alt = 8;
 
   uint8_t tage_pred, pred, alt_pred;
   int pred_comp, alt_comp;
@@ -66,8 +65,10 @@ class tage : champsim::modules::branch_predictor
   uint64_t get_path_hash(int component);
   uint16_t get_bimodal_index(uint64_t ip);
   int get_match_below_n(uint64_t ip, int component);
-  void ctr_update(uint8_t& ctr, int cond, int low, int high);
+  void ctr_update(uint8_t& ctr, bool cond, int low, int high);
   uint8_t get_prediction(uint64_t ip, int comp);
+  void allocate_new_entries(uint64_t pc);
+  void reset_usefulness_counters();
 
 public:
   using branch_predictor::branch_predictor;
